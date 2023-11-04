@@ -1,10 +1,7 @@
 package com.louie.oodp_rest.settings;
 
-import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -18,7 +15,7 @@ public class ProjectSettings {
 
     public ProjectSettings() {
         try {
-            this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/louie/oodp_rest/hello-view.fxml")));
+            this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/louie/oodp_rest/HomePage.fxml")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
