@@ -3,6 +3,8 @@ package com.louie.oodp_rest.adapter;
 import com.fasterxml.jackson.core.type.TypeReference;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.louie.oodp_rest.data_class.Student;
 
 import java.io.IOException;
@@ -24,10 +26,12 @@ public class REST_FETCH {
 
     public static Student getStudent() throws IOException, InterruptedException, URISyntaxException {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         TypeReference<List<Student>> typeReference = new TypeReference<>() {};
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(baseURL + "/students/?id=1"))
+                .uri(new URI(baseURL + "/students/?id=1000"))
                 .GET()
                 .build();
 
@@ -37,6 +41,8 @@ public class REST_FETCH {
 
     public static List<Student> getAllData() {
         ObjectMapper mapper = new ObjectMapper();
+        mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         TypeReference<List<Student>> typeReference = new TypeReference<>() {};
 
         try {

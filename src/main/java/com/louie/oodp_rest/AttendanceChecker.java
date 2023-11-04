@@ -23,21 +23,11 @@ public class AttendanceChecker extends Application {
         stage.setScene(scene);
         stage.setTitle("Attendance Checker");
         stage.centerOnScreen();
+        stage.setResizable(false);
         stage.show();
     }
 
     public static void main(String[] args) throws IOException, URISyntaxException, InterruptedException {
-        ProjectSettings.getInstance();
-
-        System.out.println(REST_FETCH.getStudent().getFirstName());
-
-        List<Student> allStudents = REST_FETCH.getAllData();
-
-        assert allStudents != null;
-        for (Student x: allStudents) {
-            System.out.println(x.getLastName());
-        }
-
         AttendanceChecker.launch(args);
     }
 }

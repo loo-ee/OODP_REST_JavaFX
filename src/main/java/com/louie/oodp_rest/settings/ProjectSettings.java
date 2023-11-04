@@ -15,7 +15,7 @@ public class ProjectSettings {
 
     public ProjectSettings() {
         try {
-            this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/louie/oodp_rest/HomePage.fxml")));
+            this.root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/com/louie/oodp_rest/home-page.fxml")));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

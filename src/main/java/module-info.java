@@ -3,6 +3,7 @@ module com.louie.oodp_rest {
     requires javafx.fxml;
     requires java.net.http;
     requires com.fasterxml.jackson.databind;
+    requires com.fasterxml.jackson.datatype.jsr310;
 
 
     opens com.louie.oodp_rest to javafx.fxml;
