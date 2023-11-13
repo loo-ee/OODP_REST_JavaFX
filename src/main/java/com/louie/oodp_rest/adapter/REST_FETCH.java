@@ -24,14 +24,14 @@ public class REST_FETCH {
         return REST_FETCH.client.send(request, HttpResponse.BodyHandlers.ofString());
     }
 
-    public static Student getStudent() throws IOException, InterruptedException, URISyntaxException {
+    public static Student getStudent(String studentID) throws IOException, InterruptedException, URISyntaxException {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         TypeReference<List<Student>> typeReference = new TypeReference<>() {};
 
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(new URI(baseURL + "/students/?id=1000"))
+                .uri(new URI(baseURL + "/students/?id=" + studentID))
                 .GET()
                 .build();
 
