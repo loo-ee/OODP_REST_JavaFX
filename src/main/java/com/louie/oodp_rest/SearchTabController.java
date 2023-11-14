@@ -13,12 +13,12 @@ public class SearchTabController {
 
     public void findStudent() throws IOException, URISyntaxException, InterruptedException {
         String studentID = searchTextField.getText();
-        Student foundStudent = REST_FETCH.getStudent(studentID);
+//        Student foundStudent = REST_FETCH.getStudent(studentID);
 
-        if (foundStudent == null)
-            return;
-
-        HomePageController.foundStudent = foundStudent;
-        HomePageController.showStudentTab();
+//        if (foundStudent == null)
+//            return;
+//
+//        HomePageController.foundStudent = foundStudent;
+//        HomePageController.showStudentTab();
     }
 }

@@ -1,7 +1,5 @@
 package com.louie.oodp_rest;
 
-import com.louie.oodp_rest.adapter.REST_FETCH;
-import com.louie.oodp_rest.data_class.Student;
 import com.louie.oodp_rest.settings.ProjectSettings;
 import javafx.application.Application;
 import javafx.scene.Parent;
@@ -10,7 +8,6 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.util.List;
 
 public class AttendanceChecker extends Application {
 

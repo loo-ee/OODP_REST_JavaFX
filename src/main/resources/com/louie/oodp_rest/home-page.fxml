@@ -11,7 +11,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="746.0" prefWidth="1153.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.louie.oodp_rest.HomePageController">
    <right>
       <VBox fx:id="rightVBox" prefHeight="719.0" prefWidth="204.0" BorderPane.alignment="CENTER">
@@ -51,10 +50,8 @@
    <center>
       <TableView fx:id="attendanceTable" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <columns>
-            <TableColumn fx:id="statusCol" minWidth="70.0" prefWidth="120.0" text="Status" />
           <TableColumn fx:id="studentIDCol" minWidth="100.0" prefWidth="200.0" text="id" />
-            <TableColumn fx:id="lastNameCol" minWidth="150.0" prefWidth="225.0" text="Last Name" />
-          <TableColumn fx:id="firstNameCol" minWidth="150.0" prefWidth="225.0" text="First Name" />
+          <TableColumn fx:id="nameCol" minWidth="150.0" prefWidth="225.0" text="Name" />
             <TableColumn fx:id="dateCol" minWidth="100.0" prefWidth="180.0" text="Date" />
         </columns>
       </TableView>

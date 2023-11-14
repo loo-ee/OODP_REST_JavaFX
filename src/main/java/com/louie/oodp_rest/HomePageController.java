@@ -1,6 +1,7 @@
 package com.louie.oodp_rest;
 
 import com.louie.oodp_rest.adapter.REST_FETCH;
+import com.louie.oodp_rest.data_class.SearchSeralizer.SectionSearchStudent;
 import com.louie.oodp_rest.data_class.Student;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -16,6 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.util.Collections;
@@ -33,7 +35,7 @@ public class HomePageController implements Initializable {
     @FXML private TableColumn<Object, Object> firstNameCol;
     @FXML private TableColumn<Object, Object> dateCol;
 
-    private static List<Student> allStudents;
+    private static List<SectionSearchStudent> sectionSearchStudent;
     public static Student foundStudent;
 
     @Override
@@ -53,45 +55,48 @@ public class HomePageController implements Initializable {
             int index = modeListView.getSelectionModel().getSelectedIndex();
 
             switch (index) {
-                case 0 -> {
-                    fetchAllStudents();
+//                case 0 -> {
+//                    fetchAllStudents();
+//
+//                    statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
+//                    studentIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
+//                    firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
+//                    lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
+//                    dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+//
+//                    ObservableList<Student> studentsData;
+//
+//                    if (!section.isEmpty()) {
+//                        studentsData = FXCollections.observableList(section);
+//                    } else {
+//                        studentsData = FXCollections.observableList(
+//                                Collections.singletonList(new Student(false, -1, "null", "null", LocalDate.now())));
+//                    }
+//
+//                    attendanceTable.setItems(studentsData);
+//                    attendanceTable.getStylesheets().add(Objects.requireNonNull(getClass().
+//                            getResource("styles/attendance_table.css")).toExternalForm());
+//
+//                    attendanceTable.getSelectionModel().selectedItemProperty().addListener(observable1 -> {
+//                        Student selectedStudent = attendanceTable.getSelectionModel().getSelectedItem();
+//
+//                        if (attendanceTable.isPressed()) {
+//                            HomePageController.foundStudent = selectedStudent;
+//                            showStudentTab();
+//                        }
+//                    });
+//                }
 
-                    statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-                    studentIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-                    firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                    lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-                    dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-
-                    ObservableList<Student> studentsData;
-
-                    if (!allStudents.isEmpty()) {
-                        studentsData = FXCollections.observableList(allStudents);
-                    } else {
-                        studentsData = FXCollections.observableList(
-                                Collections.singletonList(new Student(false, -1, "null", "null", LocalDate.now())));
-                    }
-
-                    attendanceTable.setItems(studentsData);
-                    attendanceTable.getStylesheets().add(Objects.requireNonNull(getClass().
-                            getResource("styles/attendance_table.css")).toExternalForm());
-
-                    attendanceTable.getSelectionModel().selectedItemProperty().addListener(observable1 -> {
-                        Student selectedStudent = attendanceTable.getSelectionModel().getSelectedItem();
-
-                        if (attendanceTable.isPressed()) {
-                            HomePageController.foundStudent = selectedStudent;
-                            showStudentTab();
-                        }
-                    });
+                case 1 -> {
+                    showSearchTab();
                 }
-
-                case 1 -> showSearchTab();
             }
         });
     }
 
     private void fetchAllStudents() {
-        allStudents = REST_FETCH.getAllData();
+//        section = REST_FETCH.getAllData();
+
     }
 
     private void showSearchTab() {
