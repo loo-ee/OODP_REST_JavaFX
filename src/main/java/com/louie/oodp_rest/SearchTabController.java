@@ -3,7 +3,6 @@ package com.louie.oodp_rest;
 import com.louie.oodp_rest.adapter.REST_FETCH;
 import com.louie.oodp_rest.data_class.Student;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
@@ -19,6 +18,7 @@ public class SearchTabController {
         if (foundStudent == null)
             return;
 
-        HomePageController.showStudentTab(foundStudent);
+        HomePageController.foundStudent = foundStudent;
+        HomePageController.showStudentTab();
     }
 }

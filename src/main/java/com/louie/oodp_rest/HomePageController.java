@@ -80,7 +80,7 @@ public class HomePageController implements Initializable {
 
                         if (attendanceTable.isPressed()) {
                             HomePageController.foundStudent = selectedStudent;
-                            showStudentTab(selectedStudent);
+                            showStudentTab();
                         }
                     });
                 }
@@ -107,7 +107,7 @@ public class HomePageController implements Initializable {
         }
     }
 
-    public static void showStudentTab(Student student) {
+    public static void showStudentTab() {
         try {
             Parent studentTabRoot = FXMLLoader.load(Objects.requireNonNull(HomePageController.class.getResource("/com/louie/oodp_rest/student-tab.fxml")));
             Stage studentTabStage = new Stage();
