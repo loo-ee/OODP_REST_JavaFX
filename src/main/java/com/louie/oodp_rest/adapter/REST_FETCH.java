@@ -38,7 +38,7 @@ public class REST_FETCH {
         return mapper.readValue(response.body(), SectionSearchStudent.class);
     }
 
-    public static List<SectionAllStudents> getAllData() {
+    public static SectionAllStudents getAllData() {
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
         mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
@@ -51,7 +51,7 @@ public class REST_FETCH {
 
             HttpResponse<String> response = sendRequest(request);
 
-            return Collections.singletonList(mapper.readValue(response.body(), SectionAllStudents.class));
+            return mapper.readValue(response.body(), SectionAllStudents.class);
         } catch (Exception e) {
             e.printStackTrace();
         }

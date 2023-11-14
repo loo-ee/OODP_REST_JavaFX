@@ -1,6 +1,9 @@
 package com.louie.oodp_rest;
 
 import com.louie.oodp_rest.adapter.REST_FETCH;
+import com.louie.oodp_rest.data_class.AllStudentsSerializer.Course;
+import com.louie.oodp_rest.data_class.AllStudentsSerializer.SectionAllStudents;
+import com.louie.oodp_rest.data_class.AllStudentsSerializer.SectionData;
 import com.louie.oodp_rest.data_class.SearchSeralizer.SectionSearchStudent;
 import com.louie.oodp_rest.data_class.Student;
 import javafx.collections.FXCollections;
@@ -20,22 +23,15 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class HomePageController implements Initializable {
     @FXML private ListView<String> modeListView;
 
-    @FXML private TableView<Student> attendanceTable;
-    @FXML private TableColumn<Object, Object> statusCol;
-    @FXML private TableColumn<Object, Object> studentIDCol;
-    @FXML private TableColumn<Object, Object> lastNameCol;
-    @FXML private TableColumn<Object, Object> firstNameCol;
-    @FXML private TableColumn<Object, Object> dateCol;
+    @FXML private ListView studentListView;
 
-    private static List<SectionSearchStudent> sectionSearchStudent;
+    private static SectionSearchStudent sectionSearchStudent;
+    private static SectionAllStudents sectionAllStudents;
     public static Student foundStudent;
 
     @Override
@@ -55,37 +51,29 @@ public class HomePageController implements Initializable {
             int index = modeListView.getSelectionModel().getSelectedIndex();
 
             switch (index) {
-//                case 0 -> {
-//                    fetchAllStudents();
-//
-//                    statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-//                    studentIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-//                    firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-//                    lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-//                    dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
-//
-//                    ObservableList<Student> studentsData;
-//
-//                    if (!section.isEmpty()) {
-//                        studentsData = FXCollections.observableList(section);
-//                    } else {
-//                        studentsData = FXCollections.observableList(
-//                                Collections.singletonList(new Student(false, -1, "null", "null", LocalDate.now())));
-//                    }
-//
-//                    attendanceTable.setItems(studentsData);
-//                    attendanceTable.getStylesheets().add(Objects.requireNonNull(getClass().
-//                            getResource("styles/attendance_table.css")).toExternalForm());
-//
-//                    attendanceTable.getSelectionModel().selectedItemProperty().addListener(observable1 -> {
-//                        Student selectedStudent = attendanceTable.getSelectionModel().getSelectedItem();
-//
-//                        if (attendanceTable.isPressed()) {
-//                            HomePageController.foundStudent = selectedStudent;
-//                            showStudentTab();
-//                        }
-//                    });
-//                }
+                case 0 -> {
+                    fetchAllStudents();
+
+                    Course course = sectionAllStudents.getCourse();
+                    ArrayList<String> studentsData = new ArrayList<>();
+
+                    if (course == null)
+                        return;
+
+                    for (String sectionKey: course.getSections().keySet()) {
+                        SectionData currentSectionData = course.getSections().get(sectionKey);
+
+                        for (Student currentStudent: currentSectionData.getData()) {
+                            studentsData.add(sectionKey + " -> " + currentStudent);
+                        }
+                    }
+
+                    Collections.sort(studentsData);
+                    studentListView.getItems().addAll(studentsData);
+
+                    studentListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
+                            (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
+                }
 
                 case 1 -> {
                     showSearchTab();
@@ -95,8 +83,7 @@ public class HomePageController implements Initializable {
     }
 
     private void fetchAllStudents() {
-//        section = REST_FETCH.getAllData();
-
+        sectionAllStudents = REST_FETCH.getAllData();
     }
 
     private void showSearchTab() {
