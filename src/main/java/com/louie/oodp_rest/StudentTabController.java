@@ -17,13 +17,10 @@ public class StudentTabController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         Student foundStudent = HomePageController.foundStudent;
 
-//        studentInfoListView.getItems().add("Date: " + foundStudent.getDate());
-//        studentInfoListView.getItems().add("Login Status: " + foundStudent.getStatus());
-//        studentInfoListView.getItems().add("ID: " + foundStudent.getId());
-//        studentInfoListView.getItems().add("Last Name: " + foundStudent.getLastName());
-//        studentInfoListView.getItems().add("First Name: " + foundStudent.getFirstName());
-//
-//        studentInfoListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
-//                (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
+        studentInfoListView.getItems().add("ID: " + foundStudent.getId());
+        studentInfoListView.getItems().add("Name: " + foundStudent.getName());
+
+        studentInfoListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
+                (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
     }
 }

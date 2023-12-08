@@ -13,9 +13,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -28,11 +26,13 @@ import java.util.*;
 public class HomePageController implements Initializable {
     @FXML private ListView<String> modeListView;
 
-    @FXML private ListView studentListView;
+    @FXML private TabPane recordsTabPane;
 
     private static SectionSearchStudent sectionSearchStudent;
     private static SectionAllStudents sectionAllStudents;
     public static Student foundStudent;
+
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -53,26 +53,32 @@ public class HomePageController implements Initializable {
             switch (index) {
                 case 0 -> {
                     fetchAllStudents();
-
                     Course course = sectionAllStudents.getCourse();
-                    ArrayList<String> studentsData = new ArrayList<>();
 
                     if (course == null)
                         return;
 
                     for (String sectionKey: course.getSections().keySet()) {
                         SectionData currentSectionData = course.getSections().get(sectionKey);
+                        ArrayList<String> studentsData = new ArrayList<>();
+
+                        Tab tab = new Tab();
+                        ListView<String> studentListView = new ListView<>();
 
                         for (Student currentStudent: currentSectionData.getData()) {
-                            studentsData.add(sectionKey + " -> " + currentStudent);
+                            studentsData.add(currentStudent.toString());
                         }
+
+                        Collections.sort(studentsData);
+                        studentListView.getItems().addAll(studentsData);
+                        studentListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
+                                (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
+
+                        tab.setText(sectionKey);
+                        tab.setContent(studentListView);
+                        recordsTabPane.getTabs().add(tab);
+                        recordsTabPane.getTabs().sort((Comparator.comparing(Tab::getText)));
                     }
-
-                    Collections.sort(studentsData);
-                    studentListView.getItems().addAll(studentsData);
-
-                    studentListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
-                            (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
                 }
 
                 case 1 -> {

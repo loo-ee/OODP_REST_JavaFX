@@ -16,7 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 public class REST_FETCH {
-    private static final String baseURL = "https://serval-select-totally.ngrok-free.app";
+//    private static final String baseURL = "https://serval-select-totally.ngrok-free.app";
+    private static final String baseURL = "https://pastebin.com/raw/TytE0smz?fbclid=IwAR3IGl5qGZSJcQzbfyWrWnFgJLfKTnYkhCR46NvhL_CXUOOV17MrsWZAlWY";
     private static final HttpClient client = HttpClient.newHttpClient();
 
     private static HttpResponse<String> sendRequest(HttpRequest request) throws IOException, InterruptedException {

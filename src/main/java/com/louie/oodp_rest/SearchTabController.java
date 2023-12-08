@@ -12,13 +12,14 @@ public class SearchTabController {
     @FXML private TextField searchTextField;
 
     public void findStudent() throws IOException, URISyntaxException, InterruptedException {
-        String studentID = searchTextField.getText();
-//        Student foundStudent = REST_FETCH.getStudent(studentID);
+        String studentName = searchTextField.getText();
+        String cleanedStudentName = studentName.replace(" ", "%20");
+        Student foundStudent = REST_FETCH.getStudent(cleanedStudentName).getCourse().getData().getSectionA().get(0);
 
-//        if (foundStudent == null)
-//            return;
-//
-//        HomePageController.foundStudent = foundStudent;
-//        HomePageController.showStudentTab();
+        if (foundStudent == null)
+            return;
+
+        HomePageController.foundStudent = foundStudent;
+        HomePageController.showStudentTab();
     }
 }
