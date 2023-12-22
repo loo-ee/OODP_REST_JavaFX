@@ -6,22 +6,19 @@ import com.louie.oodp_rest.data_class.AllStudentsSerializer.SectionAllStudents;
 import com.louie.oodp_rest.data_class.AllStudentsSerializer.SectionData;
 import com.louie.oodp_rest.data_class.SearchSeralizer.SectionSearchStudent;
 import com.louie.oodp_rest.data_class.Student;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.net.URL;
-import java.time.LocalDate;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class HomePageController implements Initializable {
     @FXML private ListView<String> modeListView;
@@ -31,6 +28,7 @@ public class HomePageController implements Initializable {
     private static SectionSearchStudent sectionSearchStudent;
     private static SectionAllStudents sectionAllStudents;
     public static Student foundStudent;
+    public static String currentStudentSection;
 
 
 
@@ -71,6 +69,30 @@ public class HomePageController implements Initializable {
 
                         Collections.sort(studentsData);
                         studentListView.getItems().addAll(studentsData);
+                        studentListView.getSelectionModel().selectedItemProperty().addListener(clicked -> {
+                            String query = studentListView.getSelectionModel().getSelectedItem();
+
+                            String cleanedStudentName = query.replace(" ", "%20");
+                            final Student[] foundStudent = {null};
+                            try {
+                                Map<String, List<Student>> students = REST_FETCH.getStudent(cleanedStudentName).getCourse().getData().getSections();
+
+                                students.forEach((section, studentsList) -> {
+                                    studentsList.forEach(s -> {
+                                        if (s.toString().equals(query)) {
+                                            foundStudent[0] = s;
+                                        }
+                                    });
+                                });
+                            } catch (IOException | InterruptedException | URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            if (foundStudent[0] != null) {
+                                HomePageController.foundStudent = foundStudent[0];
+                                HomePageController.showStudentTab();
+                            }
+                        });
                         studentListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
                                 (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
 

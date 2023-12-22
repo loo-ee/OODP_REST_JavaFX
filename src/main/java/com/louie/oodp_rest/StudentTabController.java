@@ -20,6 +20,7 @@ public class StudentTabController implements Initializable {
         studentInfoListView.getItems().add("ID: " + foundStudent.getId());
         studentInfoListView.getItems().add("Name: " + foundStudent.getName());
 
+
         studentInfoListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
                 (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
     }

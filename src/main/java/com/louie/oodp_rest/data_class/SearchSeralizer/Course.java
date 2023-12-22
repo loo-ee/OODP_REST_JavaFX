@@ -2,12 +2,14 @@ package com.louie.oodp_rest.data_class.SearchSeralizer;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Map;
+
 public class Course {
     @JsonProperty("total_students")
     private int totalStudents;
 
     @JsonProperty("data")
-    private SectionData data;
+    private Data data;
 
     public int getTotalStudents() {
         return totalStudents;
@@ -17,11 +19,11 @@ public class Course {
         this.totalStudents = totalStudents;
     }
 
-    public SectionData getData() {
+    public Data getData() {
         return data;
     }
 
-    public void setData(SectionData data) {
+    public void setData(Data data) {
         this.data = data;
     }
 }

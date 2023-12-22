@@ -12,12 +12,9 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.Collections;
-import java.util.List;
 
 public class REST_FETCH {
-//    private static final String baseURL = "https://serval-select-totally.ngrok-free.app";
-    private static final String baseURL = "https://pastebin.com/raw/TytE0smz?fbclid=IwAR3IGl5qGZSJcQzbfyWrWnFgJLfKTnYkhCR46NvhL_CXUOOV17MrsWZAlWY";
+    private static  final String baseURL = "http://127.0.0.1:8000";
     private static final HttpClient client = HttpClient.newHttpClient();
 
     private static HttpResponse<String> sendRequest(HttpRequest request) throws IOException, InterruptedException {
