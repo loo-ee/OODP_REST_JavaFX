@@ -3,76 +3,52 @@ package com.louie.oodp_rest.data_class;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import java.time.LocalDate;
+import java.util.List;
+
 
 public class Student {
-    @JsonProperty("status")
-    private boolean status;
-
     @JsonProperty("id")
     private long id;
 
-    @JsonProperty("firstName")
-    private String firstName;
+    @JsonProperty("name")
+    private String name;
 
-    @JsonProperty("lastName")
-    private String lastName;
-
-    @JsonProperty("date")
-    private LocalDate date;
+    @JsonProperty("attendance")
+    private List<Attendance> attendance;
 
     public Student() {}
 
-    public Student(boolean status, long id, String firstName, String lastName, LocalDate date) {
-        this.status = status;
+    public Student(long id, String name) {
         this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.date = date;
+        this.name = name;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setId(long id) {
         this.id = id;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
-
-    public void setDate(LocalDate date) {
-        this.date = date;
-    }
-
-    public boolean getStatus() {
-        return this.status;
-    }
-
     public long getId() {
         return this.id;
     }
 
-    public String getFirstName() {
-        return this.firstName;
+    public List<Attendance> getAttendance() {
+        return attendance;
     }
 
-    public String getLastName() {
-        return this.lastName;
-    }
-
-    public LocalDate getDate() {
-        return this.date;
+    public void setAttendance(List<Attendance> attendance) {
+        this.attendance = attendance;
     }
 
     @Override
     public String toString() {
-        return this.lastName + ", " + this.firstName;
+        return this.name;
     }
 }

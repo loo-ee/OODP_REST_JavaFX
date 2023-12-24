@@ -6,7 +6,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.louie.oodp_rest.SearchTabController">
    <children>
       <Label layoutX="189.0" layoutY="72.0" prefHeight="41.0" prefWidth="222.0" text="Search Student">
@@ -15,7 +14,8 @@
          </font>
       </Label>
       <TextField fx:id="searchTextField" layoutX="219.0" layoutY="187.0" promptText="123" />
-      <Label layoutX="97.0" layoutY="191.0" text="Enter Student ID" />
+      <Label layoutX="65.0" layoutY="191.0" text="Enter Student Name" />
       <Button fx:id="findBtn" layoutX="411.0" layoutY="187.0" mnemonicParsing="false" onAction="#findStudent" text="Find" />
+      <AnchorPane fx:id="resultsPane" layoutX="200.0" layoutY="238.0" prefHeight="299.0" prefWidth="200.0" />
    </children>
 </AnchorPane>

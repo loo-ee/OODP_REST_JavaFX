@@ -1,40 +1,33 @@
 package com.louie.oodp_rest;
 
 import com.louie.oodp_rest.adapter.REST_FETCH;
+import com.louie.oodp_rest.data_class.AllStudentsSerializer.Course;
+import com.louie.oodp_rest.data_class.AllStudentsSerializer.SectionAllStudents;
+import com.louie.oodp_rest.data_class.AllStudentsSerializer.SectionData;
+import com.louie.oodp_rest.data_class.SearchSeralizer.SectionSearchStudent;
 import com.louie.oodp_rest.data_class.Student;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.net.URL;
-import java.time.LocalDate;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class HomePageController implements Initializable {
     @FXML private ListView<String> modeListView;
 
-    @FXML private TableView<Student> attendanceTable;
-    @FXML private TableColumn<Object, Object> statusCol;
-    @FXML private TableColumn<Object, Object> studentIDCol;
-    @FXML private TableColumn<Object, Object> lastNameCol;
-    @FXML private TableColumn<Object, Object> firstNameCol;
-    @FXML private TableColumn<Object, Object> dateCol;
+    @FXML private TabPane recordsTabPane;
 
-    private static List<Student> allStudents;
+    private static SectionAllStudents sectionAllStudents;
     public static Student foundStudent;
+
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -55,43 +48,68 @@ public class HomePageController implements Initializable {
             switch (index) {
                 case 0 -> {
                     fetchAllStudents();
+                    recordsTabPane.getTabs().clear();
+                    Course course = sectionAllStudents.getCourse();
 
-                    statusCol.setCellValueFactory(new PropertyValueFactory<>("status"));
-                    studentIDCol.setCellValueFactory(new PropertyValueFactory<>("id"));
-                    firstNameCol.setCellValueFactory(new PropertyValueFactory<>("firstName"));
-                    lastNameCol.setCellValueFactory(new PropertyValueFactory<>("lastName"));
-                    dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+                    if (course == null)
+                        return;
 
-                    ObservableList<Student> studentsData;
+                    for (String sectionKey: course.getSections().keySet()) {
+                        SectionData currentSectionData = course.getSections().get(sectionKey);
+                        ArrayList<String> studentsData = new ArrayList<>();
 
-                    if (!allStudents.isEmpty()) {
-                        studentsData = FXCollections.observableList(allStudents);
-                    } else {
-                        studentsData = FXCollections.observableList(
-                                Collections.singletonList(new Student(false, -1, "null", "null", LocalDate.now())));
-                    }
+                        Tab tab = new Tab();
+                        ListView<String> studentListView = new ListView<>();
 
-                    attendanceTable.setItems(studentsData);
-                    attendanceTable.getStylesheets().add(Objects.requireNonNull(getClass().
-                            getResource("styles/attendance_table.css")).toExternalForm());
-
-                    attendanceTable.getSelectionModel().selectedItemProperty().addListener(observable1 -> {
-                        Student selectedStudent = attendanceTable.getSelectionModel().getSelectedItem();
-
-                        if (attendanceTable.isPressed()) {
-                            HomePageController.foundStudent = selectedStudent;
-                            showStudentTab();
+                        for (Student currentStudent: currentSectionData.getData()) {
+                            studentsData.add(currentStudent.toString());
                         }
-                    });
+
+                        Collections.sort(studentsData);
+                        studentListView.getItems().addAll(studentsData);
+                        studentListView.getSelectionModel().selectedItemProperty().addListener(clicked -> {
+                            String query = studentListView.getSelectionModel().getSelectedItem();
+
+                            String cleanedStudentName = query.replace(" ", "%20");
+                            final Student[] foundStudent = {null};
+                            try {
+                                Map<String, List<Student>> students = REST_FETCH.getStudent(cleanedStudentName).getCourse().getData().getSections();
+
+                                students.forEach((section, studentsList) -> {
+                                    studentsList.forEach(s -> {
+                                        if (s.toString().equals(query)) {
+                                            foundStudent[0] = s;
+                                        }
+                                    });
+                                });
+                            } catch (IOException | InterruptedException | URISyntaxException e) {
+                                throw new RuntimeException(e);
+                            }
+
+                            if (foundStudent[0] != null) {
+                                HomePageController.foundStudent = foundStudent[0];
+                                HomePageController.showStudentTab();
+                            }
+                        });
+                        studentListView.getStylesheets().add(Objects.requireNonNull(Objects.requireNonNull
+                                (getClass().getResource("styles/student_info_list_view.css")).toExternalForm()));
+
+                        tab.setText(sectionKey);
+                        tab.setContent(studentListView);
+                        recordsTabPane.getTabs().add(tab);
+                        recordsTabPane.getTabs().sort((Comparator.comparing(Tab::getText)));
+                    }
                 }
 
-                case 1 -> showSearchTab();
+                case 1 -> {
+                    showSearchTab();
+                }
             }
         });
     }
 
     private void fetchAllStudents() {
-        allStudents = REST_FETCH.getAllData();
+        sectionAllStudents = REST_FETCH.getAllData();
     }
 
     private void showSearchTab() {
