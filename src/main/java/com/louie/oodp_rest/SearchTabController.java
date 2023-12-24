@@ -23,7 +23,6 @@ public class SearchTabController {
         String cleanedStudentName = studentName.replace(" ", "%20");
         Map<String, List<Student>> students = REST_FETCH.getStudent(cleanedStudentName).getCourse().getData().getSections();
 
-        // TODO: Create a list for displaying search results
         ListView<String> resultsListView = new ListView<>();
         ArrayList<String> foundStudents = new ArrayList<>();
 
@@ -32,6 +31,8 @@ public class SearchTabController {
                 foundStudents.add(stud.toString());
             });
         });
+
+        Collections.sort(foundStudents);
         resultsListView.getItems().addAll(foundStudents);
         resultsListView.getSelectionModel().selectedItemProperty().addListener(clicked -> {
             String selectedItem = resultsListView.getSelectionModel().getSelectedItem();

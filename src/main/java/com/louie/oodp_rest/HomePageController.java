@@ -25,11 +25,8 @@ public class HomePageController implements Initializable {
 
     @FXML private TabPane recordsTabPane;
 
-    private static SectionSearchStudent sectionSearchStudent;
     private static SectionAllStudents sectionAllStudents;
     public static Student foundStudent;
-    public static String currentStudentSection;
-
 
 
     @Override
@@ -51,6 +48,7 @@ public class HomePageController implements Initializable {
             switch (index) {
                 case 0 -> {
                     fetchAllStudents();
+                    recordsTabPane.getTabs().clear();
                     Course course = sectionAllStudents.getCourse();
 
                     if (course == null)

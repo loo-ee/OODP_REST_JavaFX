@@ -33,4 +33,9 @@ public class Attendance {
     public void setDate(LocalDate date) {
         this.date = date;
     }
+
+    @Override
+    public String toString() {
+       return "Date: " + this.getDate().toString() + "\nIs present: " + this.isPresent + "\n\n";
+    }
 }
